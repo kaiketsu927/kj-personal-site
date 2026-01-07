@@ -69,11 +69,10 @@ import { mySkills } from "~/data/myData";
 			// if(!window || !windowName || !windowMessages) return;
 			
 			
-		
-			//移除hidden屬性 讓聊天室可以彈出
-			chatWindow.classList.remove('hidden');
-			windowName.innerText = skillName? skillName : 'DefaultSkillName';
 
+			windowName.innerText = skillName? skillName : 'DefaultSkillName';
+			//彈出前先清空
+			windowMessages.innerText ='';
 			//反序列化message後再改變DOM
 			const skillStutasMessages  = JSON.parse(rawSkillStutasMessages) || '[]';
 			// windowMessages.innerText = skillStutasMessages? skillStutasMessages : [];
@@ -84,6 +83,8 @@ import { mySkills } from "~/data/myData";
 				paragraph.innerText = message;
 				windowMessages.appendChild(paragraph);
 			})
+			//移除hidden屬性 讓聊天室可以彈出
+			chatWindow.classList.remove('hidden');
 		})
 	})
 	
