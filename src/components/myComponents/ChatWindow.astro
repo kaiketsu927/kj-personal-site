@@ -1,0 +1,40 @@
+<!-- right-96是為了避開最右方側邊欄 -->
+<!-- shadow-xl為了視覺懸空 -->
+<!-- rounded-t-lg 讓區塊上方圓角化 -->
+<!-- z-50為了是組件能浮在上方的優先度 -->
+<!-- transition 規定區塊如何平滑過去(what / duration) -->
+<div 
+  id="chat-window" 
+  class="hidden fixed bottom-0 right-96 w-80 bg-white shadow-xl rounded-t-lg border border-gray-300 flex flex-col z-50 transition-transform transform translate-y-0"
+  style="height: 400px;"
+>
+    <div class="h-12 bg-blue-600 text-white flex items-center justify-between px-3 rounded-t-lg shadow-sm cursor-pointer hover:bg-blue-700 transition">
+        <div class="flex items-center gap-2">
+            <span id="chat-title-name" class="font-bold">Chat</span>
+            <span id="chat-status-indicator" class="w-2 h-2 rounded-full bg-green-400"></span>
+        </div>
+        <button id="close-chat" class="text-white hover:text-gray-200">
+            ✕
+        </button>
+    </div>
+
+    <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50">
+    </div>
+
+    <div class="h-12 border-t bg-white flex items-center px-3 gap-2">
+        <div class="flex-1 bg-gray-100 h-8 rounded-full px-3 text-sm flex items-center text-gray-400 cursor-not-allowed">
+            在此傳送訊息...
+        </div>
+        <span class="text-blue-500">👍</span>
+    </div>
+</div>
+
+<script>
+    // 這裡js處理關閉邏輯
+    const chatWindow = document.getElementById('chat-window');
+    const closeBtn = document.getElementById('close-chat');
+
+    closeBtn?.addEventListener('click', () => {
+        chatWindow?.classList.add('hidden');
+    });
+</script>
