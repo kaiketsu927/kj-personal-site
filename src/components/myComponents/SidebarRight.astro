@@ -1,3 +1,90 @@
-<aside class="hidden w-80 overflow-y-auto border-l bg-gray-50 lg:block">
-	右側好友/技能 (Sidebar Right)
+---
+import { mySkills } from "~/data/myData";
+---
+<!--hidden會在mobile-first模式下隱藏此區塊  lg:block是直到tablet等級的螢幕大小才會呈現區塊(block
+) -->
+<aside class="hidden w-80 overflow-y-auto border-l bg-gray-50 p-4 lg:block">
+    <h3 class="font-bold text-gray-500 mb-4">聯絡人</h3>
+    
+    <div class="space-y-2">
+    {	
+		// skill-contact 把整類的div取名(之後統一由js/ts做動態控制)
+		// 單一個區塊內呈水平排列
+
+		//重要: DOM只認string, 所以遇到string[]要先用Json序列化成一個string 之後要再反序列化
+        mySkills.map((skill)=>(
+			<div class="skill-contact flex items-center gap-3 p-2 hover:bg-gray-200 rounded-lg cursor-pointer transition-colors relative group"
+			skill-name={skill.name} skill-status-messages={JSON.stringify(skill.statusMessage)}>
+
+			    {/* 圖片跟綠點塞在同一個(圓形)區塊 */}
+				<div class="relative">
+					<img 
+						src={skill.logo_path} 
+						alt={skill.name} 
+						class="w-10 h-10 rounded-full bg-white border border-gray-200 object-cover" 
+					/>
+					{
+						//根據familiar動態渲染
+						skill.familiar === 'online' ?
+						//  Online -> 產生綠燈
+                        <div class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white bg-green-500"></div> :
+						skill.familiar === 'offline' ?
+						// offline -> 無燈(或產生背景色的燈)
+						<div class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white bg-gray-400"></div>:
+						// 其他文字敘述 -> 產生上次接觸時間
+						<span class="absolute -bottom-2 right-0 text-[10px] bg-gray-100 px-1 rounded text-gray-500 border border-gray-200">
+                            {skill.familiar}
+                        </span>
+
+					}
+				</div>
+				{/* logo右方的使用者名稱區塊 */} 
+				<span class="font-medium text-gray-900">{skill.name}</span>
+				
+			</div>
+		))  
+        
+    }
+    </div>
 </aside>
+
+<script>
+	//<script>只在brower端才會執行 到這邊已經是所有的靜態ui都產生了
+	// 所以只能操作DOM元素 要跟skill串接 就只能靠之前留在屬性上的資訊
+	// CSS-Selector 以.識別為class , 以#識別為ID
+	const allSkills  = document.querySelectorAll('.skill-contact');
+
+	// 到時候在MyLayout.astro會集中管理script 所以拿得到ChatWindow的DOM
+	// 在處理DOM的時候常用斷言(告訴TS你確保這邊是拿到HTMLElement 而不是null  不然型別標示他是幫你檢查型別 會囉嗦)
+	const chatWindow = document.getElementById('chat-window') as HTMLElement;
+	const windowName = document.getElementById('chat-title-name') as HTMLElement;
+	const windowMessages = document.getElementById('chat-messages') as HTMLElement;
+
+	allSkills.forEach((skillBtn)=>{
+		skillBtn.addEventListener('click',()=>{
+			const skillName = skillBtn.getAttribute('skill-name') || 'Unknown'; 
+			const rawSkillStutasMessages = skillBtn.getAttribute('skill-status-messages') || '[]';
+			
+			//如果根本讀不到視窗就無法執行 不加斷言的話可用
+			// if(!window || !windowName || !windowMessages) return;
+			
+			
+		
+			//移除hidden屬性 讓聊天室可以彈出
+			chatWindow.classList.remove('hidden');
+			windowName.innerText = skillName? skillName : 'DefaultSkillName';
+
+			//反序列化message後再改變DOM
+			const skillStutasMessages  = JSON.parse(rawSkillStutasMessages) || '[]';
+			// windowMessages.innerText = skillStutasMessages? skillStutasMessages : [];
+			skillStutasMessages.forEach((message)=>
+			{
+				const paragraph = document.createElement('div');
+				paragraph.classList.add('bg-gray-100', 'p-2', 'rounded', 'mb-2', 'self-start', 'max-w-[80%]');
+				paragraph.innerText = message;
+				windowMessages.appendChild(paragraph);
+			})
+		})
+	})
+	
+</script>

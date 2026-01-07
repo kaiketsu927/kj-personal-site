@@ -1,6 +1,6 @@
 export interface SkillFriend{
     id : string,
-    logo : string, // image path
+    logo_path : string, // image path
     name : string,  
     familiar : string, // 模擬fb聊天室是否上線, 把他比喻成技能是否還熟悉的概念, online代表熟悉 半年可能代表半年前有碰過, offline代表曾經接觸但現在生疏
     category : 'Framework' | 'DB' | 'Language' | 'Tool',
@@ -10,7 +10,7 @@ export interface SkillFriend{
 export const mySkills: SkillFriend[] = [
   {
     id: 'redis',
-    logo: '🔴', // 之後換圖片路徑
+    logo_path: '🔴', // 之後換圖片路徑
     name: 'Redis',
     familiar: 'offline', // 曾經接觸但現在生疏
     category: 'DB',
@@ -21,7 +21,7 @@ export const mySkills: SkillFriend[] = [
   },
   {
     id: 'ts',
-    logo: '📘',
+    logo_path: '📘',
     name: 'TypeScript',
     familiar: 'online', // 熟悉
     category: 'Language',

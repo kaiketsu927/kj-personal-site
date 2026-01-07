@@ -5,12 +5,12 @@
 <!-- transition 規定區塊如何平滑過去(what / duration) -->
 <div 
   id="chat-window" 
-  class="hidden fixed bottom-0 right-96 w-80 bg-white shadow-xl rounded-t-lg border border-gray-300 flex flex-col z-50 transition-transform transform translate-y-0"
+  class="hidden fixed bottom-0 right-32 w-80 bg-white shadow-xl rounded-t-lg border border-gray-300 flex flex-col z-50 transition-transform transform translate-y-0"
   style="height: 400px;"
 >
     <div class="h-12 bg-blue-600 text-white flex items-center justify-between px-3 rounded-t-lg shadow-sm cursor-pointer hover:bg-blue-700 transition">
         <div class="flex items-center gap-2">
-            <span id="chat-title-name" class="font-bold">Chat</span>
+            <span id="chat-title-name" class="font-bold">[Default Skill Name]</span>
             <span id="chat-status-indicator" class="w-2 h-2 rounded-full bg-green-400"></span>
         </div>
         <button id="close-chat" class="text-white hover:text-gray-200">
@@ -23,7 +23,7 @@
 
     <div class="h-12 border-t bg-white flex items-center px-3 gap-2">
         <div class="flex-1 bg-gray-100 h-8 rounded-full px-3 text-sm flex items-center text-gray-400 cursor-not-allowed">
-            在此傳送訊息...
+            [Default Message]
         </div>
         <span class="text-blue-500">👍</span>
     </div>
