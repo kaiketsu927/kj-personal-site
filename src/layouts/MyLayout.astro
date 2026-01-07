@@ -1,8 +1,11 @@
 ---
+// `---...---`是astro的code fence, 只會到傳輸到伺服器端的時候執行一次
 // src/layouts/MyHomeLayout.astro
-import MyHomeLayout from '~/layouts/MyLayout.astro';
+import Header from '../components/myComponents/Header.astro';
+import SidebarLeft from '../components/myComponents/SidebarLeft.astro';
+import SidebarRight from '../components/myComponents/SidebarRight.astro';
 import '../assets/styles/tailwind.css';
-const { title = "My Social Resume" } = Astro.props;
+const { title = "My Social Resume" } = Astro.props; //Astro物件傳送(props)從page介面接收到的資訊
 ---
 
 <!doctype html>
@@ -16,25 +19,13 @@ const { title = "My Social Resume" } = Astro.props;
 	<body class="h-full overflow-hidden text-gray-900 antialiased">
 		
 		<div class="flex h-screen w-full flex-col">
-			
-			<header class="h-16 flex-none border-b bg-white shadow-sm z-10 flex items-center px-4">
-				Header 區塊
-			</header>
-
+			<Header />
 			<div class="flex flex-1 overflow-hidden">
-				
-				<aside class="hidden w-64 overflow-y-auto border-r bg-gray-50 md:block">
-					左側選單 (Sidebar Left)
-				</aside>
-
+				<SidebarLeft />
 				<main class="flex-1 overflow-y-auto bg-white p-4">
-					<slot />
+					<slot /> <!-- slot 挖洞, 給外部填充會變動的內容`--> 
 				</main>
-
-				<aside class="hidden w-80 overflow-y-auto border-l bg-gray-50 lg:block">
-					右側好友/技能 (Sidebar Right)
-				</aside>
-
+				<SidebarRight />
 			</div>
 		</div>
 
