@@ -20,17 +20,6 @@ export const mySkills: SkillFriend[] = [
     ]
   },
   {
-    id: 'ts',
-    logo_path: 'skills/typescript.png',
-    name: 'TypeScript',
-    familiar: 'online', // 熟悉
-    category: 'Language',
-    statusMessage: [
-      "我現在每天都在用 TypeScript！",
-      "型別系統真的救了我很多次 bug。"
-    ]
-  },
-  {
     id: 'nuxt',
     logo_path: '/skills/nuxt.png',
     name: 'Nuxt.js',

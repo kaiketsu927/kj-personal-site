@@ -1,10 +1,49 @@
 ---
 import { mySkills } from "~/data/myData";
+// 在伺服器端就先跑出categories變數 //使用Set去重複
+const categories = ["All", ...new Set(mySkills.map((mySkill)=> mySkill.category))];
 ---
 <!--hidden會在mobile-first模式下隱藏此區塊  lg:block是直到tablet等級的螢幕大小才會呈現區塊(block
 ) -->
 <aside class="hidden w-80 overflow-y-auto border-l bg-gray-50 p-4 lg:block">
-    <h3 class="font-bold text-gray-500 mb-4">聯絡人</h3>
+    <div class="px-4 py-3 flex items-center justify-between bg-gray-50 z-20 sticky top-0">
+        
+        <h3 class="font-bold text-gray-500 text-base">聯絡人</h3>
+        
+        <div class="flex items-center gap-1">
+            
+            <button 
+                id="filter-toggle-btn" 
+                class="p-2 rounded-full hover:bg-gray-200 text-gray-500 transition-colors relative group"
+                title="篩選分類"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+
+                <span id="filter-active-dot" class="hidden absolute top-1.5 right-1.5 w-2 h-2 bg-blue-500 rounded-full border border-gray-50"></span>
+            </button>
+
+            <button class="p-2 rounded-full hover:bg-gray-200 text-gray-500 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+	<div id="filter-menu" class="hidden bg-white border-b border-gray-100 shadow-inner">
+        <div class="p-3 flex flex-wrap gap-2">
+            {categories.map(category => (
+                <button 
+                    class="filter-btn px-3 py-1 text-xs rounded-full border border-gray-200 bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 transition-colors"
+                    data-filter={category}
+                >
+                    {category}
+                </button>
+            ))}
+        </div>
+    </div>
     
     <div class="space-y-2">
     {	
@@ -12,9 +51,10 @@ import { mySkills } from "~/data/myData";
 		// 單一個區塊內呈水平排列
 
 		//重要: DOM只認string, 所以遇到string[]要先用Json序列化成一個string 之後要再反序列化
+		//一般來說自定義的class name要在前面冠上data-來辨識
         mySkills.map((skill)=>(
 			<div class="skill-contact flex items-center gap-3 p-2 hover:bg-gray-200 rounded-lg cursor-pointer transition-colors relative group"
-			skill-name={skill.name} skill-status-messages={JSON.stringify(skill.statusMessage)}>
+			data-skill-name={skill.name} data-skill-status-messages={JSON.stringify(skill.statusMessage)} data-skill-category={skill.category}>
 
 			    {/* 圖片跟綠點塞在同一個(圓形)區塊 */}
 				<div class="relative">
@@ -62,13 +102,11 @@ import { mySkills } from "~/data/myData";
 
 	allSkills.forEach((skillBtn)=>{
 		skillBtn.addEventListener('click',()=>{
-			const skillName = skillBtn.getAttribute('skill-name') || 'Unknown'; 
-			const rawSkillStutasMessages = skillBtn.getAttribute('skill-status-messages') || '[]';
+			const skillName = skillBtn.getAttribute('data-skill-name') || 'Unknown'; 
+			const rawSkillStutasMessages = skillBtn.getAttribute('data-skill-status-messages') || '[]';
 			
 			//如果根本讀不到視窗就無法執行 不加斷言的話可用
 			// if(!window || !windowName || !windowMessages) return;
-			
-			
 
 			windowName.innerText = skillName? skillName : 'DefaultSkillName';
 			//彈出前先清空
@@ -88,4 +126,65 @@ import { mySkills } from "~/data/myData";
 		})
 	})
 	
+	//  以下為篩選按鈕邏輯
+    const toggleBtn = document.getElementById('filter-toggle-btn');
+    const filterMenu = document.getElementById('filter-menu');
+
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const activeDot = document.getElementById('filter-active-dot');
+    const noResultMsg = document.getElementById('no-result-msg');
+
+    // 點擊放大鏡 -> 展開/收合篩選標籤
+    toggleBtn?.addEventListener('click', () => {
+        filterMenu?.classList.toggle('hidden');
+        toggleBtn.classList.toggle('bg-gray-200');
+    });
+
+    // 點擊分類標籤
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetCategory = btn.getAttribute('data-filter');
+            let visibleCount = 0;
+
+            filterBtns.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                btn.classList.add('bg-gray-50', 'text-gray-600', 'border-gray-200');
+            });
+            btn.classList.remove('bg-gray-50', 'text-gray-600', 'border-gray-200');
+            btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+
+            allSkills.forEach(skill => {
+                const el = skill as HTMLElement;
+                const category = el.getAttribute('data-skill-category');
+
+                if (targetCategory === 'All' || category === targetCategory) {
+                    el.classList.remove('hidden');
+                    el.classList.add('flex');
+                    visibleCount++;
+                } else {
+                    el.classList.add('hidden');
+                    el.classList.remove('flex');
+                }
+            });
+
+            if (noResultMsg) {
+                visibleCount === 0 ? noResultMsg.classList.remove('hidden') : noResultMsg.classList.add('hidden');
+            }
+
+            // 狀態回饋
+            if (targetCategory !== 'All') {
+                activeDot?.classList.remove('hidden');
+                toggleBtn?.classList.add('text-blue-600');
+            } else {
+                activeDot?.classList.add('hidden');
+                toggleBtn?.classList.remove('text-blue-600');
+            }
+        });
+    });
+
+    if(filterBtns.length > 0) {
+        const firstBtn = filterBtns[0] as HTMLElement;
+        firstBtn.classList.remove('bg-gray-50', 'text-gray-600', 'border-gray-200');
+        firstBtn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+    }
 </script>
