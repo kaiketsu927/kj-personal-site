@@ -7,6 +7,21 @@ export interface SkillFriend{
     statusMessage : string[],
 }
 
+// 以下interface皆為暫定
+export interface NotificationItem {
+  id: number;
+  avatar: string;      // 通知來源的圖示 (emoji 或圖片路徑)
+  text: string;        // 通知內容
+  time: string;        // 時間字串
+  isUnread: boolean;   // 是否未讀 (true 會顯示藍底+紅點)
+}
+
+// 2. 定義個人檔案的資料型別
+export interface ProfileItem {
+  name: string;
+  role: string;
+  avatar: string;
+}
 export const mySkills: SkillFriend[] = [
   {
     id: 'redis',
@@ -145,3 +160,36 @@ export const mySkills: SkillFriend[] = [
     ]
   }
 ];
+
+// 之後擴充
+// 3. 模擬的通知資料 (Mock Data)
+export const myNotifications: NotificationItem[] = [
+  {
+    id: 1,
+    avatar: "🚀", 
+    text: "你的專案 'Social Resume' 已成功部署到 Production 環境。",
+    time: "剛剛",
+    isUnread: true, // 這則是未讀 -> 會讓鈴鐺顯示紅字 1
+  },
+  {
+    id: 2,
+    avatar: "👨‍💻",
+    text: "GitHub Bot: 你今年已經累積了 500+ 次 Commits！",
+    time: "2 小時前",
+    isUnread: false, // 這則是已讀
+  },
+  {
+    id: 3,
+    avatar: "🎯",
+    text: "React 技能熟練度已提升至 'Senior' 等級。",
+    time: "1 天前",
+    isUnread: false,
+  }
+];
+
+// 4. 模擬的個人檔案資料
+export const myProfile: ProfileItem = {
+  name: "凱傑 楊",                
+  role: "Backend Engineer",      
+  avatar: "myPhoto.png" // 暫時先用一張現有的圖片當頭像，之後再換成你自己的照片
+};
