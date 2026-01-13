@@ -3,7 +3,13 @@ import { myNotifications, myProfile } from "~/data/myData";
 
 // 暫時模擬目前的頁面是 'home'
 // 之後我們會用 Astro.url.pathname 來自動判斷
-const currentTab = 'home'; 
+
+const pathName = Astro.url.pathname;
+// 判斷哪個 Tab 應該是 Active 狀態
+const isActive = (id: string) => {
+    if (id === 'home') return pathName === '/';
+    return pathName.startsWith(`/${id}`);
+};
 
 // 計算未讀數量
 const unreadCount = myNotifications.filter(n => n.isUnread).length;
@@ -13,24 +19,28 @@ const navItems = [
     { 
         id: 'home', 
         name: 'about me', 
+        href: '/', // 加入連結
         // 🏠 House Icon
         iconPath: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' 
     },
     { 
         id: 'community', 
         name: 'community contribution', 
+        href: '/community',
         // 👥 Group/Community Icon (代表開源社群)
         iconPath: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' 
     },
     { 
         id: 'work', 
         name: 'work display', 
+        href: '/work',
         // 💻 Code/Terminal Icon (代表 Project)
         iconPath: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' 
     },
     { 
         id: 'activity', 
         name: 'activities paticipation', 
+        href: '/activities',
         // 📅 Calendar/Event Icon (代表參加過的活動)
         iconPath: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z' 
     }
@@ -68,28 +78,31 @@ const navItems = [
     </div>
 
     <div class="hidden md:flex flex-1 justify-center max-w-xl h-full">
-        <div class="flex w-full justify-between h-full space-x-1">
-            {navItems.map((item) => ( // 切記tsx只能是expression(物) 不能是statement(事/操作)
-                <div class="relative group flex-1 flex justify-center items-center cursor-pointer h-full">
+    <div class="flex w-full justify-between h-full space-x-1">
+        {navItems.map((item) => {
+            const active = isActive(item.id); // 計算狀態
+            return (
+                <a href={item.href} class="relative group flex-1 flex justify-center items-center cursor-pointer h-full">
                     
                     <div class="absolute top-14 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-80 transition-opacity pointer-events-none delay-500 whitespace-nowrap z-50">
                         {item.name}
                     </div>
 
                     <div class={`w-full h-[90%] my-1 rounded-lg flex items-center justify-center transition-colors 
-                        ${currentTab === item.id ? 'text-blue-600' : 'text-gray-500 hover:bg-gray-100'}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" class={`h-7 w-7 ${currentTab === item.id ? 'fill-current' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={currentTab === item.id ? 2 : 1.5}>
+                        ${active ? 'text-blue-600' : 'text-gray-500 hover:bg-gray-100'}`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" class={`h-7 w-7 ${active ? 'fill-current' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={active ? 2 : 1.5}>
                             <path stroke-linecap="round" stroke-linejoin="round" d={item.iconPath} />
                         </svg>
                     </div>
 
-                    {currentTab === item.id && (
+                    {active && (
                         <div class="absolute bottom-0 h-[3px] w-full bg-blue-600 rounded-t-sm"></div>
                     )}
-                </div>
-            ))}
-        </div>
+                </a>
+            )
+        })}
     </div>
+</div>
 
     <div class="flex items-center justify-end gap-2 lg:gap-3 w-1/4">
         
