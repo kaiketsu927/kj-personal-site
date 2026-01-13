@@ -5,8 +5,9 @@ const categories = ["All", ...new Set(mySkills.map((mySkill)=> mySkill.category)
 ---
 <!--hidden會在mobile-first模式下隱藏此區塊  lg:block是直到tablet等級的螢幕大小才會呈現區塊(block
 ) -->
-<aside class="hidden w-80 overflow-y-auto border-l bg-gray-50 p-4 lg:block">
-    <div class="px-4 py-3 flex items-center justify-between bg-gray-50 z-20 sticky top-0">
+<aside class="hidden w-80 border-l bg-gray-50 flex-col h-full lg:flex overflow-hidden">
+    
+    <div class="px-4 py-3 flex items-center justify-between bg-gray-50 z-20 sticky top-0 border-b border-gray-200">
         
         <h3 class="font-bold text-gray-500 text-base">聯絡人</h3>
         
@@ -32,7 +33,7 @@ const categories = ["All", ...new Set(mySkills.map((mySkill)=> mySkill.category)
         </div>
     </div>
     
-	<div id="filter-menu" class="hidden bg-white border-b border-gray-100 shadow-inner">
+    <div id="filter-menu" class="hidden bg-white border-b border-gray-100 shadow-inner">
         <div class="p-3 flex flex-wrap gap-2">
             {categories.map(category => (
                 <button 
@@ -45,44 +46,47 @@ const categories = ["All", ...new Set(mySkills.map((mySkill)=> mySkill.category)
         </div>
     </div>
     
-    <div class="space-y-2">
-    {	
-		// skill-contact 把整類的div取名(之後統一由js/ts做動態控制)
-		// 單一個區塊內呈水平排列
+    <div class="flex-1 overflow-y-auto p-4 space-y-2">
+    {   
+        // skill-contact 把整類的div取名(之後統一由js/ts做動態控制)
+        // 單一個區塊內呈水平排列
 
-		//重要: DOM只認string, 所以遇到string[]要先用Json序列化成一個string 之後要再反序列化
-		//一般來說自定義的class name要在前面冠上data-來辨識
+        //重要: DOM只認string, 所以遇到string[]要先用Json序列化成一個string 之後要再反序列化
+        //一般來說自定義的class name要在前面冠上data-來辨識
         mySkills.map((skill)=>(
-			<div class="skill-contact flex items-center gap-3 p-2 hover:bg-gray-200 rounded-lg cursor-pointer transition-colors relative group"
-			data-skill-name={skill.name} data-skill-status-messages={JSON.stringify(skill.statusMessage)} data-skill-category={skill.category}>
+            <div class="skill-contact flex items-center gap-3 p-2 hover:bg-gray-200 rounded-lg cursor-pointer transition-colors relative group"
+            data-skill-name={skill.name} data-skill-status-messages={JSON.stringify(skill.statusMessage)} data-skill-category={skill.category}>
 
-			    {/* 圖片跟綠點塞在同一個(圓形)區塊 */}
-				<div class="relative">
-					<img 
-						src={skill.logo_path} 
-						alt={skill.name} 
-						class="w-10 h-10 rounded-full bg-white border border-gray-200 object-cover" 
-					/>
-					{
-						//根據familiar動態渲染
-						skill.familiar === 'online' ?
-						//  Online -> 產生綠燈
+                {/* 圖片跟綠點塞在同一個(圓形)區塊 */}
+                <div class="relative">
+                    <img 
+                        src={skill.logo_path} 
+                        alt={skill.name} 
+                        class="w-10 h-10 rounded-full bg-white border border-gray-200 object-cover" 
+                    />
+                    {
+                        //根據familiar動態渲染
+                        skill.familiar === 'online' ?
+                        //  Online -> 產生綠燈
                         <div class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white bg-green-500"></div> :
-						skill.familiar === 'offline' ?
-						// offline -> 無燈(或產生背景色的燈)
-						<div class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white bg-gray-400"></div>:
-						// 其他文字敘述 -> 產生上次接觸時間
-						<span class="absolute -bottom-2 right-0 text-[10px] bg-gray-100 px-1 rounded text-gray-500 border border-gray-200">
+                        skill.familiar === 'offline' ?
+                        // offline -> 無燈(或產生背景色的燈)
+                        <div class="absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white bg-gray-400"></div>:
+                        // 其他文字敘述 -> 產生上次接觸時間
+                        <span class="absolute -bottom-2 right-0 text-[10px] bg-gray-100 px-1 rounded text-gray-500 border border-gray-200">
                             {skill.familiar}
                         </span>
 
-					}
-				</div>
-				{/* logo右方的使用者名稱區塊 */} 
-				<span class="font-medium text-gray-900">{skill.name}</span>
-				
-			</div>
-		))  
+                    }
+                </div>
+                {/* logo右方的使用者名稱區塊 */} 
+                <div class="flex flex-col">
+                    <span class="font-medium text-gray-900">{skill.name}</span>
+                    <span class="text-xs text-gray-400">{skill.category}</span>
+                </div>
+                
+            </div>
+        ))  
         
     }
     </div>
