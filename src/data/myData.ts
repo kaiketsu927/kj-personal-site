@@ -214,73 +214,87 @@ export const myProfile: ProfileItem = {
   avatar: "myPhoto.png" // 暫時先用一張現有的圖片當頭像，之後再換成你自己的照片
 };
 
-// 3. 模擬資料
+// Post資料
 export const allPosts: Post[] = [
   {
     id: 1,
     name: "凱傑 楊",
-    category : 'home',
-    description: "這是一個使用 Union Type 設計的貼文系統。\n如果是連結，會顯示下方的卡片樣式；如果是字串，則直接顯示圖片。",
-    likes: 42,
+    category: "community",
+    description: "終於在 Zod 這個神級專案留下足跡了！🎉\n這是我第一次貢獻開源專案，修復了 zod 在特定情況下的型別推導錯誤 (PR #5511)。為了這個 fix，我花了不少時間鑽研它的 Source Code，對於 TypeScript 的型別系統與泛型推導 (Inference) 又有了更深的理解。",
+    likes: 88,
     imageOrLink: {
       id: 101,
-      imagePath: "/images/hero-image.png", // 請確保 public 資料夾有圖
-      url: "https://github.com/KJ-Wang",
-
+      imagePath: "./zod.png", 
+      url: "https://github.com/colinhacks/zod/pull/5511"
     }
   },
+
+  //  Calendar-CLI (Work) - 用 Link 預覽圖形式
   {
     id: 2,
     name: "凱傑 楊",
-    category : 'home',
-    description: "Redis 是一個高效能的 Key-Value 資料庫，這是我整理的學習筆記。",
-    likes: 108,
-    // Case B: 這只是一個 string (純圖片路徑)
-    imageOrLink: "/images/skills/redis.png" 
-  },
-  // --- WORK (作品展示) ---
-  {
-    id: 2,
-    category: 'work',
-    name: "凱傑 楊",
-    description: "🚀 [專案發布] Social Resume Demo\n\n這是我最近開發的開源專案，模擬 Facebook 的 UI/UX 來呈現個人履歷。\n\n技術棧：\n• Astro (SSG/SSR)\n• Tailwind CSS\n• TypeScript\n\n歡迎到 GitHub 查看原始碼！",
+    category: "work",
+    description: "受夠了每次都要打開網頁看行事曆，不如自己寫一個 CLI 工具吧！⌨️\n這個 Calendar-CLI 是我近期練習 TypeScript 與 Node.js 的小專案。除了實作基本的 CRUD，也練習了如何使用 Commander.js 處理 CLI 的互動介面，並結合 date-fns 處理複雜的日期運算邏輯。",
     likes: 45,
     imageOrLink: {
-      id: 101,
-      imagePath: "/images/hero-image.png", // 專案截圖
-      url: "https://github.com/KJ-Wang/social-resume-demo"
+      id: 102,
+      imagePath: "./calendar-cli.png",
+      url: "https://github.com/kaiketsu927/calendar_cli"
     }
   },
+
+  // Personal-Site (Work) - 純圖片展示
   {
     id: 3,
-    category: 'work',
     name: "凱傑 楊",
-    description: "📦 [系統架構] 高併發 Redis 快取策略\n\n在經手的一個電商專案中，我設計了這套快取機制，成功將 API 回應時間從 200ms 降低至 20ms。",
-    likes: 89,
-    imageOrLink: "/images/skills/redis.png" // 架構圖
+    category: "work",
+    description: "你們現在看到的個人網站，就是我的第二個 Side Project！🚀\n雖然我主攻後端，但為了讓作品有個家，選擇使用 Astro 搭配 Tailwind CSS 快速建置。這裡就像我的實驗室，未來會持續把學到的後端技術（如 CI/CD pipeline）整合進來，把這個靜態網站變得更動態。",
+    likes: 10,
+    imageOrLink: "./personal-site.png"
   },
 
-  // --- COMMUNITY (社群貢獻) ---
+  // Jeff Dean's Guide (Activities) - 用 Link 預覽圖形式
   {
     id: 4,
-    category: 'community',
     name: "凱傑 楊",
-    description: "💡 在 StackOverflow 上回答了一個關於 React useEffect 的複雜問題，被選為最佳解答。\n\n能夠幫助到其他開發者是工程師生涯中最開心的時刻之一。",
-    likes: 230,
+    category: "activities",
+    description: "週末讀物：Google 大神 Jeff Dean 的系統優化指南。📚\n這篇關於 Latency Numbers 的文章真的是經典中的經典。在設計後端系統時，提醒自己不要只看功能實現，更要對 CPU、Memory 和 Network 的存取成本有數量級的概念，這對效能優化至關重要。",
+    likes: 67,
     imageOrLink: {
-      id: 102,
-      imagePath: "/images/skills/react.png", // StackOverflow 截圖或 React Logo
-      url: "https://stackoverflow.com/"
+      id: 103,
+      // 建議去找一張有關 "Latency Numbers Every Programmer Should Know" 的圖表當封面
+      imagePath: "./jeff-dean.jpg", 
+      url: "https://abseil.io/fast/hints.html"
     }
   },
 
-  // --- ACTIVITY (技術活動) ---
+  // Heho Health (Home) - 純圖片展示 (回憶/經歷)
   {
     id: 5,
-    category: 'activity',
     name: "凱傑 楊",
-    description: "📅 參加了 COSCUP 2024 開源人年會！\n\n聽了幾場關於微服務架構的演講，收穫良多，也認識了很多厲害的前輩。",
-    likes: 67,
-    imageOrLink: "/images/coscup.jpg" // 假設你有活動照片，沒有的話先用其他圖代替
+    category: "home",
+    description: "回顧在 Heho 健康的一年產學合作經歷。👨‍⚕️\n當時我負責開發癌症資訊 Chatbot 的核心功能。主要技術點在於處理 User Input 的字串清洗 (使用 Regex 與 Jieba 分詞) 以及 FAQ 熱門問題檢索。這也是我第一次將 ChatGPT API 落地到實際的商業場景中，解決了許多非結構化問答的難題。",
+    likes: 56,
+    imageOrLink: "./heho.png"
+  },
+
+  // Mean Well (Home) - 純圖片展示
+  {
+    id: 6,
+    name: "凱傑 楊",
+    category: "home",
+    description: "用 AI 幫企業寫報告，真的可行嗎？🤔\n在明緯企業的產學計畫中，我設計了一套流程引導 LLM 生成年度永續報告書 (SDGs)。這不僅是 Prompt Engineering 的實戰，更涉及後續將 Code Base 模組化，並擔任技術指導將專案順利交接給下一屆學弟妹。",
+    likes: 18,
+    imageOrLink: "./mean-well-sdg.png"
+  },
+
+  // NCCU (Home) - 純圖片展示 (生活近況)
+  {
+    id: 7,
+    name: "凱傑 楊",
+    category: "home",
+    description: "新的旅程即將開始！🎓\n很榮幸在 2025 年錄取國立政治大學資管所科技組。大學時期的跌跌撞撞都是養分，接下來希望能將重心放在分散式系統與更底層的後端架構研究上。政大見！",
+    likes: 200,
+    imageOrLink: "./nccu.png"
   }
 ];
