@@ -8,7 +8,7 @@ const currentTab = 'home';
 // 計算未讀數量
 const unreadCount = myNotifications.filter(n => n.isUnread).length;
 
-// 定義中間的導航選單 (對應你的四大板塊)
+// 定義中間的導航選單 
 const navItems = [
     { 
         id: 'home', 
@@ -25,7 +25,7 @@ const navItems = [
     { 
         id: 'work', 
         name: 'work display', 
-        // 💻 Code/Terminal Icon (代表你的 Project)
+        // 💻 Code/Terminal Icon (代表 Project)
         iconPath: 'M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4' 
     },
     { 
@@ -69,7 +69,7 @@ const navItems = [
 
     <div class="hidden md:flex flex-1 justify-center max-w-xl h-full">
         <div class="flex w-full justify-between h-full space-x-1">
-            {navItems.map((item) => (
+            {navItems.map((item) => ( // 切記tsx只能是expression(物) 不能是statement(事/操作)
                 <div class="relative group flex-1 flex justify-center items-center cursor-pointer h-full">
                     
                     <div class="absolute top-14 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-80 transition-opacity pointer-events-none delay-500 whitespace-nowrap z-50">
