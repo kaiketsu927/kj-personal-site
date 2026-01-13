@@ -1,0 +1,12 @@
+---
+import MyLayout from '~/layouts/MyLayout.astro';
+
+// 接收 title 屬性，並繼續傳給最外層的 MyLayout
+const { title } = Astro.props;
+---
+
+<MyLayout title={title}>
+    <div class="max-w-[680px] mx-auto w-full space-y-4">
+        <slot />
+    </div>
+</MyLayout>

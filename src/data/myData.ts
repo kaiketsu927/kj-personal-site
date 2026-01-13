@@ -13,6 +13,7 @@ export interface SkillFriend{
 
 export interface Post{
   id: number,
+  category : string, // 用來分類貼文要放在哪個子頁
   name : string,
   description: string,
   imageOrLink : PreviewLink | string , // 若為一般圖片就只存路徑
@@ -21,7 +22,7 @@ export interface Post{
 
 export interface PreviewLink{
   id : number,
-  title: string,
+  // title?: string, //未來擴充可能用到
   imagePath: string, // 預覽圖路徑
   url : string //點擊會跳轉的連結
   
@@ -214,26 +215,72 @@ export const myProfile: ProfileItem = {
 };
 
 // 3. 模擬資料
-export const myPosts: Post[] = [
+export const allPosts: Post[] = [
   {
     id: 1,
     name: "凱傑 楊",
+    category : 'home',
     description: "這是一個使用 Union Type 設計的貼文系統。\n如果是連結，會顯示下方的卡片樣式；如果是字串，則直接顯示圖片。",
     likes: 42,
     imageOrLink: {
       id: 101,
       imagePath: "/images/hero-image.png", // 請確保 public 資料夾有圖
       url: "https://github.com/KJ-Wang",
-      title: "KJ-Yang/social-resume-demo",
 
     }
   },
   {
     id: 2,
     name: "凱傑 楊",
+    category : 'home',
     description: "Redis 是一個高效能的 Key-Value 資料庫，這是我整理的學習筆記。",
     likes: 108,
     // Case B: 這只是一個 string (純圖片路徑)
     imageOrLink: "/images/skills/redis.png" 
+  },
+  // --- WORK (作品展示) ---
+  {
+    id: 2,
+    category: 'work',
+    name: "周泓宇",
+    description: "🚀 [專案發布] Social Resume Demo\n\n這是我最近開發的開源專案，模擬 Facebook 的 UI/UX 來呈現個人履歷。\n\n技術棧：\n• Astro (SSG/SSR)\n• Tailwind CSS\n• TypeScript\n\n歡迎到 GitHub 查看原始碼！",
+    likes: 45,
+    imageOrLink: {
+      id: 101,
+      imagePath: "/images/hero-image.png", // 專案截圖
+      url: "https://github.com/KJ-Wang/social-resume-demo"
+    }
+  },
+  {
+    id: 3,
+    category: 'work',
+    name: "周泓宇",
+    description: "📦 [系統架構] 高併發 Redis 快取策略\n\n在經手的一個電商專案中，我設計了這套快取機制，成功將 API 回應時間從 200ms 降低至 20ms。",
+    likes: 89,
+    imageOrLink: "/images/skills/redis.png" // 架構圖
+  },
+
+  // --- COMMUNITY (社群貢獻) ---
+  {
+    id: 4,
+    category: 'community',
+    name: "周泓宇",
+    description: "💡 在 StackOverflow 上回答了一個關於 React useEffect 的複雜問題，被選為最佳解答。\n\n能夠幫助到其他開發者是工程師生涯中最開心的時刻之一。",
+    likes: 230,
+    imageOrLink: {
+      id: 102,
+      imagePath: "/images/skills/react.png", // StackOverflow 截圖或 React Logo
+      url: "https://stackoverflow.com/"
+    }
+  },
+
+  // --- ACTIVITY (技術活動) ---
+  {
+    id: 5,
+    category: 'activity',
+    name: "周泓宇",
+    description: "📅 參加了 COSCUP 2024 開源人年會！\n\n聽了幾場關於微服務架構的演講，收穫良多，也認識了很多厲害的前輩。",
+    likes: 67,
+    imageOrLink: "/images/coscup.jpg" // 假設你有活動照片，沒有的話先用其他圖代替
   }
 ];
