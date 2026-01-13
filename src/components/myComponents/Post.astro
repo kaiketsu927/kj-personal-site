@@ -1,0 +1,106 @@
+---
+import type { Post, PreviewLink } from "~/data/myData";
+import { myProfile } from "~/data/myData";
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+
+// 判斷是否為純圖片 (字串路徑)
+const isPureImage = typeof post.imageOrLink === 'string';
+const linkData = !isPureImage ? (post.imageOrLink as PreviewLink) : null;
+---
+
+<div class="feed-post bg-white rounded-lg shadow-sm border border-gray-200 mb-4 font-sans" data-post-id={post.id}>
+    
+    <div class="px-4 py-3 flex items-center gap-2">
+        <img src={myProfile.avatar} class="w-10 h-10 rounded-full border border-gray-200 object-cover" />
+        <div>
+            <h4 class="font-bold text-[15px] text-gray-900 leading-snug cursor-pointer hover:underline">{post.name}</h4>
+            <span class="text-gray-500 text-[13px] cursor-pointer hover:underline">剛剛 · 🌍</span>
+        </div>
+    </div>
+
+    <div class="px-4 pb-3">
+        <p class="text-[15px] text-gray-900 whitespace-pre-line leading-normal">
+            {post.description}
+        </p>
+    </div>
+
+    {isPureImage ? (
+        // Case A: 純圖片 (無連結)
+        <div class="w-full border-t border-b border-gray-100 cursor-pointer overflow-hidden bg-gray-50">
+            <img src={post.imageOrLink as string} class="w-full h-auto object-contain max-h-[500px]" />
+        </div>
+    ) : (
+        // Case B: 連結預覽圖
+        // 直接用 <a> 包住圖片，瀏覽器就會自動處理 hover 顯示網址的效果
+        <a 
+            href={linkData?.url} 
+            target="_blank" 
+            class="block w-full border-t border-b border-gray-200 hover:opacity-95 transition-opacity"
+        >
+            <div class="w-full aspect-[1.91/1] overflow-hidden bg-gray-100 relative">
+                <img 
+                    src={linkData?.imagePath} 
+                    class="w-full h-full object-cover" 
+                />
+                
+                </div>
+            
+            </a>
+    )}
+
+    <div class="px-4 py-2">
+        <div class="flex items-center gap-1.5 text-gray-500 text-[15px] mb-2">
+            <div class="w-4.5 h-4.5 bg-blue-500 rounded-full flex items-center justify-center p-1">
+                <svg class="w-full h-full fill-white" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            </div>
+            <span class="like-count">{post.likes}</span>
+        </div>
+        <div class="border-t border-gray-200 pt-1 flex">
+            <button class="like-btn flex-1 flex items-center justify-center gap-2 py-1.5 rounded-md transition-colors text-gray-600 font-semibold text-[15px] hover:bg-gray-100" data-liked="false">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon-outline" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" /></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 icon-solid hidden fill-blue-600 stroke-blue-600" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" /></svg>
+                <span>Likes</span>
+            </button>
+            <button class="flex-1 py-1.5 text-gray-600 font-semibold hover:bg-gray-100 rounded-md">Comment</button>
+            <button class="flex-1 py-1.5 text-gray-600 font-semibold hover:bg-gray-100 rounded-md">Share</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const posts = document.querySelectorAll('.feed-post');
+    posts.forEach(post => {
+        const btn = post.querySelector('.like-btn');
+        const countSpan = post.querySelector('.like-count');
+        const iconOutline = post.querySelector('.icon-outline');
+        const iconSolid = post.querySelector('.icon-solid');
+
+        if(btn && countSpan && iconOutline && iconSolid) {
+            btn.addEventListener('click', () => {
+                const isLiked = btn.getAttribute('data-liked') === 'true';
+                const newState = !isLiked;
+                btn.setAttribute('data-liked', String(newState));
+                let currentCount = parseInt(countSpan.textContent || '0');
+
+                if (newState) {
+                    countSpan.textContent = (currentCount + 1).toString();
+                    btn.classList.add('text-blue-600');
+                    btn.classList.remove('text-gray-600');
+                    iconOutline.classList.add('hidden');
+                    iconSolid.classList.remove('hidden');
+                } else {
+                    countSpan.textContent = (currentCount - 1).toString();
+                    btn.classList.remove('text-blue-600');
+                    btn.classList.add('text-gray-600');
+                    iconOutline.classList.remove('hidden');
+                    iconSolid.classList.add('hidden');
+                }
+            });
+        }
+    });
+</script>

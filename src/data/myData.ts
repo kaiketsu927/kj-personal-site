@@ -1,3 +1,5 @@
+import type { SiteConfig } from "vendor/integration/utils/configBuilder";
+
 export interface SkillFriend{
     id : string,
     logo_path : string, // image path
@@ -7,6 +9,23 @@ export interface SkillFriend{
     statusMessage : string[],
 }
 
+// post interface
+
+export interface Post{
+  id: number,
+  name : string,
+  description: string,
+  imageOrLink : PreviewLink | string , // 若為一般圖片就只存路徑
+  likes : number
+}
+
+export interface PreviewLink{
+  id : number,
+  title: string,
+  imagePath: string, // 預覽圖路徑
+  url : string //點擊會跳轉的連結
+  
+}
 // 以下interface皆為暫定
 export interface NotificationItem {
   id: number;
@@ -189,7 +208,32 @@ export const myNotifications: NotificationItem[] = [
 
 // 4. 模擬的個人檔案資料
 export const myProfile: ProfileItem = {
-  name: "凱傑 楊",                
-  role: "Backend Engineer",      
+  name: "凱傑 楊",      //可刪          
+  role: "Backend Engineer", //可刪       
   avatar: "myPhoto.png" // 暫時先用一張現有的圖片當頭像，之後再換成你自己的照片
 };
+
+// 3. 模擬資料
+export const myPosts: Post[] = [
+  {
+    id: 1,
+    name: "凱傑 楊",
+    description: "這是一個使用 Union Type 設計的貼文系統。\n如果是連結，會顯示下方的卡片樣式；如果是字串，則直接顯示圖片。",
+    likes: 42,
+    imageOrLink: {
+      id: 101,
+      imagePath: "/images/hero-image.png", // 請確保 public 資料夾有圖
+      url: "https://github.com/KJ-Wang",
+      title: "KJ-Yang/social-resume-demo",
+
+    }
+  },
+  {
+    id: 2,
+    name: "凱傑 楊",
+    description: "Redis 是一個高效能的 Key-Value 資料庫，這是我整理的學習筆記。",
+    likes: 108,
+    // Case B: 這只是一個 string (純圖片路徑)
+    imageOrLink: "/images/skills/redis.png" 
+  }
+];
