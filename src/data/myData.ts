@@ -242,7 +242,7 @@ export const allPosts: Post[] = [
   {
     id: 2,
     category: 'work',
-    name: "周泓宇",
+    name: "凱傑 楊",
     description: "🚀 [專案發布] Social Resume Demo\n\n這是我最近開發的開源專案，模擬 Facebook 的 UI/UX 來呈現個人履歷。\n\n技術棧：\n• Astro (SSG/SSR)\n• Tailwind CSS\n• TypeScript\n\n歡迎到 GitHub 查看原始碼！",
     likes: 45,
     imageOrLink: {
@@ -254,7 +254,7 @@ export const allPosts: Post[] = [
   {
     id: 3,
     category: 'work',
-    name: "周泓宇",
+    name: "凱傑 楊",
     description: "📦 [系統架構] 高併發 Redis 快取策略\n\n在經手的一個電商專案中，我設計了這套快取機制，成功將 API 回應時間從 200ms 降低至 20ms。",
     likes: 89,
     imageOrLink: "/images/skills/redis.png" // 架構圖
@@ -264,7 +264,7 @@ export const allPosts: Post[] = [
   {
     id: 4,
     category: 'community',
-    name: "周泓宇",
+    name: "凱傑 楊",
     description: "💡 在 StackOverflow 上回答了一個關於 React useEffect 的複雜問題，被選為最佳解答。\n\n能夠幫助到其他開發者是工程師生涯中最開心的時刻之一。",
     likes: 230,
     imageOrLink: {
@@ -278,7 +278,7 @@ export const allPosts: Post[] = [
   {
     id: 5,
     category: 'activity',
-    name: "周泓宇",
+    name: "凱傑 楊",
     description: "📅 參加了 COSCUP 2024 開源人年會！\n\n聽了幾場關於微服務架構的演講，收穫良多，也認識了很多厲害的前輩。",
     likes: 67,
     imageOrLink: "/images/coscup.jpg" // 假設你有活動照片，沒有的話先用其他圖代替

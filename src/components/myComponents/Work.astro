@@ -1,0 +1,11 @@
+---
+import Post from './Post.astro';
+import { allPosts } from '~/data/myData';
+
+// 這裡只負責抓資料跟渲染列表
+const posts = allPosts.filter(p => p.category === 'work');
+---
+
+{posts.map((post) => (
+    <Post post={post} />
+))}
