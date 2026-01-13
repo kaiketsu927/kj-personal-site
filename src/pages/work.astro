@@ -3,11 +3,11 @@ import SocialPageLayout from '~/components/myComponents/SocialPageLayout.astro';
 import Post from '~/components/myComponents/Post.astro';
 import { allPosts } from '~/data/myData';
 
-// 篩選 Home 類別
-const posts = allPosts.filter(p => p.category === 'home');
+// 篩選類別
+const posts = allPosts.filter(p => p.category === 'work');
 ---
 
-<SocialPageLayout title="Home | Social Resume">
+<SocialPageLayout title="Work | Social Resume">
     {posts.map((post) => (
         <Post post={post} />
     ))}
