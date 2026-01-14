@@ -4,11 +4,11 @@ import { myProfile } from "~/data/myData";
 // 1. 核心導航選單 (新增 Life & Article)
 const mainNavItems = [
     { name: "Home", icon: "home", href: "/", color: "text-blue-500" },
-    { name: "Work (作品展示)", icon: "briefcase", href: "/work", color: "text-green-600" },
-    { name: "Community (社群貢獻)", icon: "users", href: "/community", color: "text-blue-400" },
-    { name: "Activity (技術活動)", icon: "calendar", href: "/activity", color: "text-red-500" },
-    { name: "Article (技術文章)", icon: "article", href: "/article", color: "text-purple-500" }, // New
-    { name: "Life (生活紀錄)", icon: "life", href: "/life", color: "text-yellow-500" },       // New
+    { name: "Work", icon: "briefcase", href: "/work", color: "text-green-600" },
+    { name: "Community", icon: "users", href: "/community", color: "text-blue-400" },
+    { name: "Activity", icon: "calendar", href: "/activities", color: "text-red-500" },
+    { name: "Article", icon: "article", href: "/article", color: "text-purple-500" },
+    { name: "Life", icon: "life", href: "/life", color: "text-yellow-500" },      
 ];
 
 // 2. LeetCode 模擬數據 (根據你的截圖)
@@ -25,9 +25,10 @@ const leetcodeStats = {
 
 // 3. 聯絡捷徑
 const contactShortcuts = [
-    { name: "GitHub", img: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", href: "https://github.com/KJ-Wang", subtitle: "Check my code" },
-    { name: "LinkedIn", img: "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg", href: "https://www.linkedin.com/in/", subtitle: "Connect with me" },
-    { name: "Email", img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg", href: "mailto:kj@example.com", subtitle: "Send me a message" }
+    { name: "GitHub", img: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", href: "https://github.com/kaiketsu927", subtitle: "Check my code" },
+    // { name: "LinkedIn", img: "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg", href: "https://www.linkedin.com/in/", subtitle: "Connect with me" },
+    { name: "LinkedIn", img: "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg", subtitle: "Connect with me" },
+	{ name: "Email", img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg", subtitle: "ew363362@gmail.com" }
 ];
 
 // Helper: 產生隨機的綠色等級 (模擬 GitHub/LeetCode 貢獻圖)
@@ -101,7 +102,7 @@ const contributionDots = Array(52).fill(0).map(() => getRandomContributionColor(
         <hr class="border-gray-300 mx-2" />
 
         <div class="px-2">
-             <h3 class="text-[17px] font-semibold text-gray-500 mb-2">AD (Sponsored)</h3>
+             <h3 class="text-[17px] font-semibold text-gray-500 mb-2">AD</h3>
              
              <a href="mailto:kj@example.com" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors group cursor-pointer">
                 <div class="w-24 h-24 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex flex-col items-center justify-center text-white shrink-0 shadow-sm group-hover:shadow-md transition-shadow relative overflow-hidden">
@@ -153,7 +154,7 @@ const contributionDots = Array(52).fill(0).map(() => getRandomContributionColor(
                         <span class="w-6 text-right font-medium text-gray-600">{leetcodeStats.easy}</span>
                     </div>
                     <div class="flex items-center gap-2 text-xs">
-                        <span class="w-8 text-gray-500 text-[10px]">Med.</span>
+                        <span class="w-8 text-gray-500 text-[10px]">Medium</span>
                         <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
                             <div class="h-full bg-[#ffc01e] rounded-full" style={`width: ${(leetcodeStats.medium / leetcodeStats.solved) * 100}%`}></div>
                         </div>
@@ -185,7 +186,6 @@ const contributionDots = Array(52).fill(0).map(() => getRandomContributionColor(
         <div class="px-2">
              <div class="flex items-center justify-between mb-2 group cursor-pointer">
                  <h3 class="text-[17px] font-semibold text-gray-500 group-hover:text-gray-600">Contact Me</h3>
-                 <span class="hidden group-hover:block text-blue-500 text-sm">編輯</span>
              </div>
              {contactShortcuts.map(contact => (
                 <a href={contact.href} target="_blank" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
@@ -200,10 +200,10 @@ const contributionDots = Array(52).fill(0).map(() => getRandomContributionColor(
 
         <div class="px-2 mt-auto pt-4 pb-10">
             <p class="text-[13px] text-gray-500 leading-relaxed">
-                <span class="hover:underline cursor-pointer">Privacy</span> · 
-                <span class="hover:underline cursor-pointer">Terms</span> · 
-                <span class="hover:underline cursor-pointer">Cookies</span> · 
-                Social Resume © 2026
+                <span class="hover:underline">Privacy</span> · 
+                <span class="hover:underline">Terms</span> · 
+                <span class="hover:underline">Cookies</span> 
+                <p>FB-Like Personal Website © 2026</p>
             </p>
         </div>
     </div>
