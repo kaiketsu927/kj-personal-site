@@ -1,4 +1,217 @@
-<!--hidden(或者說css - display:none是為了在解決mobile小螢幕硬要顯示側邊欄而壓縮主要畫面的問題)-->
-<aside class="hidden w-64 overflow-y-auto border-r bg-gray-50 md:block">
-	左側選單 (Sidebar Left)
+---
+import { myProfile } from "~/data/myData";
+
+// 1. 核心導航選單 (新增 Life & Article)
+const mainNavItems = [
+    { name: "Home", icon: "home", href: "/", color: "text-blue-500" },
+    { name: "Work (作品展示)", icon: "briefcase", href: "/work", color: "text-green-600" },
+    { name: "Community (社群貢獻)", icon: "users", href: "/community", color: "text-blue-400" },
+    { name: "Activity (技術活動)", icon: "calendar", href: "/activity", color: "text-red-500" },
+    { name: "Article (技術文章)", icon: "article", href: "/article", color: "text-purple-500" }, // New
+    { name: "Life (生活紀錄)", icon: "life", href: "/life", color: "text-yellow-500" },       // New
+];
+
+// 2. LeetCode 模擬數據 (根據你的截圖)
+const leetcodeStats = {
+    username: "kaiketsu",
+    rank: "2,182,800",
+    solved: 54,
+    total: 3807,
+    easy: 36,
+    medium: 17,
+    hard: 1,
+    profileUrl: "https://leetcode.com/u/kaiketsu/"
+};
+
+// 3. 聯絡捷徑
+const contactShortcuts = [
+    { name: "GitHub", img: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", href: "https://github.com/KJ-Wang", subtitle: "Check my code" },
+    { name: "LinkedIn", img: "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg", href: "https://www.linkedin.com/in/", subtitle: "Connect with me" },
+    { name: "Email", img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg", href: "mailto:kj@example.com", subtitle: "Send me a message" }
+];
+
+// Helper: 產生隨機的綠色等級 (模擬 GitHub/LeetCode 貢獻圖)
+const getRandomContributionColor = () => {
+    const colors = ['bg-gray-200', 'bg-green-200', 'bg-green-400', 'bg-green-600'];
+    // 讓灰色多一點，看起來比較真實
+    const rand = Math.random();
+    if (rand > 0.7) return colors[3];
+    if (rand > 0.5) return colors[2];
+    if (rand > 0.3) return colors[1];
+    return colors[0];
+};
+// 產生 52 個小方塊 (代表一週七天 x 幾週)
+const contributionDots = Array(52).fill(0).map(() => getRandomContributionColor());
+---
+
+<aside class="hidden lg:block w-[280px] xl:w-[360px] h-screen sticky top-14 overflow-y-auto hover:overflow-y-scroll pb-20 pr-2 custom-scrollbar">
+    <div class="p-2 space-y-4 mt-4">
+        
+        <a href="/" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+            <img src={myProfile.avatar} alt={myProfile.name} class="w-9 h-9 rounded-full border border-gray-200 object-cover"/>
+            <span class="font-medium text-[15px] text-gray-900">{myProfile.name}</span>
+        </a>
+
+        {mainNavItems.map(item => (
+            <a href={item.href} class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer group">
+                <div class={`w-9 h-9 rounded-full flex items-center justify-center`}>
+                    {/* Home */}
+                    {item.icon === 'home' && (
+                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={`w-7 h-7 ${item.color}`}>
+                          <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
+                          <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
+                        </svg>
+                    )}
+                    {/* Briefcase */}
+                    {item.icon === 'briefcase' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={`w-7 h-7 ${item.color}`}>
+                          <path fill-rule="evenodd" d="M7.5 5.25A2.25 2.25 0 019.75 3h4.5A2.25 2.25 0 0116.5 5.25v1.5h1.5a3 3 0 013 3v9a3 3 0 01-3 3h-12a3 3 0 01-3-3v-9a3 3 0 013-3h1.5V5.25zm3 0v1.5h3V5.25a.75.75 0 00-.75-.75h-1.5a.75.75 0 00-.75.75z" clip-rule="evenodd" />
+                        </svg>
+                    )}
+                    {/* Users */}
+                    {item.icon === 'users' && (
+                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={`w-7 h-7 ${item.color}`}>
+                          <path d="M4.5 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM14.25 8.625a3.375 3.375 0 116.75 0 3.375 3.375 0 01-6.75 0zM1.5 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM17.25 19.128l-.001.144a2.25 2.25 0 01-.233.96 10.088 10.088 0 005.06-4.423V14.875a6.375 6.375 0 00-4.826-6.248z" />
+                        </svg>
+                    )}
+                    {/* Calendar */}
+                    {item.icon === 'calendar' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={`w-7 h-7 ${item.color}`}>
+                          <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 000-1.5h-3.75V6z" clip-rule="evenodd" />
+                        </svg>
+                    )}
+                    {/* Article (New) - Book icon */}
+                    {item.icon === 'article' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={`w-7 h-7 ${item.color}`}>
+                          <path d="M11.25 4.533A9.707 9.707 0 006 3.75a9.706 9.706 0 00-6 3.75V16.575a1.125 1.125 0 001.35 1.096 10.48 10.48 0 013.9 0 1.125 1.125 0 001.35-1.096v-12.042zm1.5 0v12.042a1.125 1.125 0 001.35 1.096 10.48 10.48 0 013.9 0 1.125 1.125 0 001.35-1.096V7.5a9.706 9.706 0 00-6-3.75 9.707 9.707 0 00-5.25.783z" />
+                        </svg>
+                    )}
+                    {/* Life (New) - Camera/Photo icon */}
+                    {item.icon === 'life' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class={`w-7 h-7 ${item.color}`}>
+                          <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
+                          <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                        </svg>
+                    )}
+                </div>
+                <span class="font-medium text-[15px] text-gray-900 group-hover:text-blue-600 transition-colors">{item.name}</span>
+            </a>
+        ))}
+
+        <hr class="border-gray-300 mx-2" />
+
+        <div class="px-2">
+             <h3 class="text-[17px] font-semibold text-gray-500 mb-2">AD (Sponsored)</h3>
+             
+             <a href="mailto:kj@example.com" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors group cursor-pointer">
+                <div class="w-24 h-24 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex flex-col items-center justify-center text-white shrink-0 shadow-sm group-hover:shadow-md transition-shadow relative overflow-hidden">
+                    <div class="absolute inset-0 bg-white opacity-10 group-hover:opacity-20 transition-opacity"></div>
+                    <span class="text-3xl">🤝</span>
+                    <span class="text-xs font-bold mt-2">HIRE ME</span>
+                </div>
+                
+                <div class="flex flex-col">
+                    <span class="text-[15px] font-semibold text-gray-900 leading-snug group-hover:underline">
+                        Open for Opportunities
+                    </span>
+                    <span class="text-[13px] text-gray-500 mt-1">
+                        Full-Stack / Backend
+                    </span>
+                    <span class="text-[13px] text-gray-500 mt-0.5 line-clamp-2">
+                        Looking for a passionate engineer? Let's build something amazing together.
+                    </span>
+                </div>
+             </a>
+        </div>
+
+        <hr class="border-gray-300 mx-2" />
+
+        <div class="px-2">
+            <div class="flex items-center justify-between mb-2">
+                <h3 class="text-[17px] font-semibold text-gray-500">LeetCode Status</h3>
+                <a href={leetcodeStats.profileUrl} target="_blank" class="text-xs text-blue-500 cursor-pointer hover:underline">View Profile</a>
+            </div>
+            
+            <a href={leetcodeStats.profileUrl} target="_blank" class="block bg-white rounded-lg border border-gray-200 p-3 shadow-sm hover:bg-gray-50 transition-colors group">
+                <div class="flex justify-between items-end mb-3">
+                    <div class="flex flex-col">
+                        <span class="text-xs text-gray-500">Solved</span>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-xl font-bold text-gray-800">{leetcodeStats.solved}</span>
+                            <span class="text-xs text-gray-400">/ {leetcodeStats.total}</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-gray-400">Rank: {leetcodeStats.rank}</span>
+                </div>
+                
+                <div class="space-y-2 mb-4">
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="w-8 text-gray-500 text-[10px]">Easy</span>
+                        <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-[#00b8a3] rounded-full" style={`width: ${(leetcodeStats.easy / leetcodeStats.solved) * 100}%`}></div>
+                        </div>
+                        <span class="w-6 text-right font-medium text-gray-600">{leetcodeStats.easy}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="w-8 text-gray-500 text-[10px]">Med.</span>
+                        <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-[#ffc01e] rounded-full" style={`width: ${(leetcodeStats.medium / leetcodeStats.solved) * 100}%`}></div>
+                        </div>
+                        <span class="w-6 text-right font-medium text-gray-600">{leetcodeStats.medium}</span>
+                    </div>
+                    <div class="flex items-center gap-2 text-xs">
+                        <span class="w-8 text-gray-500 text-[10px]">Hard</span>
+                        <div class="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                            <div class="h-full bg-[#ff375f] rounded-full" style={`width: ${(leetcodeStats.hard / leetcodeStats.solved) * 100}%`}></div>
+                        </div>
+                        <span class="w-6 text-right font-medium text-gray-600">{leetcodeStats.hard}</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-end mb-1">
+                    <span class="text-[10px] text-gray-400">Submission Activity</span>
+                    <span class="text-[10px] text-green-600 font-medium group-hover:underline">Active</span>
+                </div>
+                <div class="grid grid-cols-[repeat(13,1fr)] gap-[2px]">
+                    {contributionDots.map(color => (
+                        <div class={`aspect-square rounded-[1px] ${color}`}></div>
+                    ))}
+                </div>
+            </a>
+        </div>
+
+        <hr class="border-gray-300 mx-2" />
+
+        <div class="px-2">
+             <div class="flex items-center justify-between mb-2 group cursor-pointer">
+                 <h3 class="text-[17px] font-semibold text-gray-500 group-hover:text-gray-600">Contact Me</h3>
+                 <span class="hidden group-hover:block text-blue-500 text-sm">編輯</span>
+             </div>
+             {contactShortcuts.map(contact => (
+                <a href={contact.href} target="_blank" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+                    <img src={contact.img} alt={contact.name} class="w-9 h-9 rounded-md object-cover border border-gray-100 bg-white p-0.5"/>
+                    <div class="flex flex-col">
+                        <span class="font-medium text-[15px] text-gray-900 leading-tight">{contact.name}</span>
+                        <span class="text-[13px] text-gray-500">{contact.subtitle}</span>
+                    </div>
+                </a>
+            ))}
+        </div>
+
+        <div class="px-2 mt-auto pt-4 pb-10">
+            <p class="text-[13px] text-gray-500 leading-relaxed">
+                <span class="hover:underline cursor-pointer">Privacy</span> · 
+                <span class="hover:underline cursor-pointer">Terms</span> · 
+                <span class="hover:underline cursor-pointer">Cookies</span> · 
+                Social Resume © 2026
+            </p>
+        </div>
+    </div>
 </aside>
+
+<style>
+    .custom-scrollbar::-webkit-scrollbar { width: 8px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar:hover::-webkit-scrollbar-thumb { background: #bcc0c4; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: transparent; }
+</style>
