@@ -17,14 +17,18 @@ const linkData = !isSimpleImage ? (post.imageOrLink as PreviewLink) : null;
     
     <div class="px-4 py-3 flex items-center gap-2">
         <img src={myProfile.avatar} class="w-10 h-10 rounded-full border border-gray-200 object-cover flex-shrink-0" />
+        
         <div class="min-w-0 flex-1">
-            <h4 class="font-bold text-[15px] text-gray-900 leading-snug cursor-pointer hover:underline truncate">
+            <h4 class="font-bold text-[15px] text-gray-900 leading-snug truncate hover:underline cursor-default">
                 {post.name}
             </h4>
-            <span class="text-gray-500 text-[13px] cursor-pointer hover:underline block">剛剛 · 🌍</span>
+            
+            <span class="text-gray-500 text-[13px] block hover:underline cursor-default">
+                剛剛 · 🌍
+            </span>
         </div>
         
-        <button class="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500">
+        <button class="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500 cursor-default">
              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 12c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
         </button>
     </div>
@@ -37,8 +41,13 @@ const linkData = !isSimpleImage ? (post.imageOrLink as PreviewLink) : null;
 
     {isSimpleImage ? (
         // Case A: 純圖片
-        <div class="w-full border-t border-b border-gray-100 cursor-pointer overflow-hidden bg-gray-50">
-            <img src={post.imageOrLink as string} class="w-full h-auto object-contain max-h-[500px]" loading="lazy" />
+        <div class="w-full border-t border-b border-gray-100 overflow-hidden bg-gray-50">
+            <img 
+                src={post.imageOrLink as string} 
+                class="w-full h-auto object-contain max-h-[500px]" 
+                loading="lazy" 
+                alt="post image"
+            />
         </div>
     ) : (
         // Case B: 連結預覽圖
