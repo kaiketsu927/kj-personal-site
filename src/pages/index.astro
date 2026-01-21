@@ -4,7 +4,6 @@ import Post from '~/components/myComponents/Post.astro';
 import { allPosts } from '~/data/myData';
 
 // 篩選 Home 類別
-const posts = allPosts.filter(p => p.category === '');
 const pinnedPosts = allPosts.filter(p => p.category === 'home'&& p.isPinned===true);
 const normalPosts = allPosts.filter(p => p.category === 'home'&& p.isPinned===false);
 ---

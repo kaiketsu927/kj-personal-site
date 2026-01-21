@@ -18,7 +18,8 @@ export interface Post{
   description: string,
   imageOrLink : PreviewLink | string , // 若為一般圖片就只存路徑
   likes : number,
-  isPinned : Boolean
+  isPinned : Boolean,
+  date : string , // 格式如 "2024-05-20"
 }
 
 export interface PreviewLink{
@@ -228,7 +229,8 @@ export const allPosts: Post[] = [
       imagePath: "./zod.png", 
       url: "https://github.com/colinhacks/zod/pull/5511"
     },
-    isPinned: true
+    isPinned: true,
+    date : "2025-12-08"
   },
 
   //  Calendar-CLI (Work) - 用 Link 預覽圖形式
@@ -243,7 +245,8 @@ export const allPosts: Post[] = [
       imagePath: "./calendar-cli.png",
       url: "https://github.com/kaiketsu927/calendar_cli"
     },
-    isPinned: true
+    isPinned: true,
+    date : "2025-12-24",
   },
 
   // Personal-Site (Work) - 純圖片展示
@@ -254,7 +257,8 @@ export const allPosts: Post[] = [
     description: "你們現在看到的個人網站，就是我的第二個 Side Project！🚀\n雖然我主攻後端，但為了讓作品有個家，選擇使用 Astro 搭配 Tailwind CSS 快速建置。這裡就像我的實驗室，未來會持續把學到的後端技術（如 CI/CD pipeline）整合進來，把這個靜態網站變得更動態。",
     likes: 10,
     imageOrLink: "./personal-site.png",
-    isPinned: false
+    isPinned: false,
+    date : "2026-01-21",
   },
 
   // Jeff Dean's Guide (Activities) - 用 Link 預覽圖形式
@@ -270,7 +274,8 @@ export const allPosts: Post[] = [
       imagePath: "./jeff-dean.jpg", 
       url: "https://abseil.io/fast/hints.html"
     },
-    isPinned: false
+    isPinned: false,
+    date : "2025-12-08",
   },
 
   // Heho Health (Home) - 純圖片展示 (回憶/經歷)
@@ -281,7 +286,8 @@ export const allPosts: Post[] = [
     description: "回顧在 Heho 健康的一年產學合作經歷。👨‍⚕️\n當時我負責開發癌症資訊 Chatbot 的核心功能。主要技術點在於處理 User Input 的字串清洗 (使用 Regex 與 Jieba 分詞) 以及 FAQ 熱門問題檢索。這也是我第一次將 ChatGPT API 落地到實際的商業場景中，解決了許多非結構化問答的難題。",
     likes: 56,
     imageOrLink: "./heho.png",
-    isPinned: false
+    isPinned: false,
+    date : "2023-05-30",
   },
 
   // Mean Well (Home) - 純圖片展示
@@ -292,7 +298,8 @@ export const allPosts: Post[] = [
     description: "用 AI 幫企業寫報告，真的可行嗎？🤔\n在明緯企業的產學計畫中，我設計了一套流程引導 LLM 生成年度永續報告書 (SDGs)。這不僅是 Prompt Engineering 的實戰，更涉及後續將 Code Base 模組化，並擔任技術指導將專案順利交接給下一屆學弟妹。",
     likes: 18,
     imageOrLink: "./mean-well-sdg.png",
-    isPinned: false
+    isPinned: false,
+    date : "2023-09-30",
   },
 
   // NCCU (Home) - 純圖片展示 (生活近況)
@@ -303,6 +310,7 @@ export const allPosts: Post[] = [
     description: "新的旅程即將開始！🎓\n很榮幸在 2025 年錄取國立政治大學資管所科技組。大學時期的跌跌撞撞都是養分，接下來希望能將重心放在分散式系統與更底層的後端架構研究上。政大見！",
     likes: 200,
     imageOrLink: "./nccu.png",
-    isPinned: true
+    isPinned: true,
+    date : "2025-08-29",
   }
 ];
