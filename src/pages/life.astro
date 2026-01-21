@@ -1,9 +1,18 @@
 ---
 import SocialPageLayout from '~/components/myComponents/SocialPageLayout.astro';
+import Post from '~/components/myComponents/Post.astro';
+import { allPosts } from '~/data/myData';
+
+// 篩選類別
+const pinnedPosts = allPosts.filter(p => p.category === 'life'&& p.isPinned===true);
+const normalPosts = allPosts.filter(p => p.category === 'life'&& p.isPinned===false);
 ---
-<SocialPageLayout title="Life | Social Resume">
-    <div class="bg-white rounded-lg p-8 text-center text-gray-500">
-        <span class="text-4xl block mb-2">📚</span>
-        Comming Soon...
-    </div>
+
+<SocialPageLayout title="Life | KJ's Personal Site">
+   {pinnedPosts.map((post) => (
+        <Post post={post} />
+    ))}
+    {normalPosts.map((post) => (
+        <Post post={post} />
+    ))}
 </SocialPageLayout>
