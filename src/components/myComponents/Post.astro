@@ -184,7 +184,7 @@ const fullDateTitle = new Date(post.date).toLocaleDateString('zh-TW', {
                 const isLiked = btn.getAttribute('data-liked') === 'true';
                 const newState = !isLiked;
                 btn.setAttribute('data-liked', String(newState));
-                let currentCount = parseInt(countSpan.textContent || '0');
+                const currentCount = parseInt(countSpan.textContent || '0');
 
                 if (newState) {
                     countSpan.textContent = (currentCount + 1).toString();

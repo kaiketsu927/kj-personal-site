@@ -1,5 +1,3 @@
-import type { SiteConfig } from "vendor/integration/utils/configBuilder";
-
 export interface SkillFriend{
     id : string,
     logo_path : string, // image path
@@ -18,7 +16,7 @@ export interface Post{
   description: string,
   imageOrLink : PreviewLink | string , // 若為一般圖片就只存路徑
   likes : number,
-  isPinned : Boolean,
+  isPinned : boolean,
   date : string , // 格式如 "2024-05-20"
 }
 

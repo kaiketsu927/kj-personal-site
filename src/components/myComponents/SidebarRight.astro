@@ -105,30 +105,30 @@ const categories = ["All", ...new Set(mySkills.map((mySkill)=> mySkill.category)
 	const windowMessages = document.getElementById('chat-messages') as HTMLElement;
 
 	allSkills.forEach((skillBtn)=>{
-		skillBtn.addEventListener('click',()=>{
-			const skillName = skillBtn.getAttribute('data-skill-name') || 'Unknown'; 
-			const rawSkillStutasMessages = skillBtn.getAttribute('data-skill-status-messages') || '[]';
-			
-			//如果根本讀不到視窗就無法執行 不加斷言的話可用
-			// if(!window || !windowName || !windowMessages) return;
+        skillBtn.addEventListener('click',()=>{
+            const skillName = skillBtn.getAttribute('data-skill-name') || 'Unknown'; 
+            // 這裡已經有 || '[]' 保護了，所以 rawSkillStutasMessages 一定是 JSON 字串
+            const rawSkillStutasMessages = skillBtn.getAttribute('data-skill-status-messages') || '[]';
+            
+            windowName.innerText = skillName? skillName : 'DefaultSkillName';
+            windowMessages.innerText ='';
 
-			windowName.innerText = skillName? skillName : 'DefaultSkillName';
-			//彈出前先清空
-			windowMessages.innerText ='';
-			//反序列化message後再改變DOM
-			const skillStutasMessages  = JSON.parse(rawSkillStutasMessages) || '[]';
-			// windowMessages.innerText = skillStutasMessages? skillStutasMessages : [];
-			skillStutasMessages.forEach((message)=>
-			{
-				const paragraph = document.createElement('div');
-				paragraph.classList.add('bg-gray-100', 'p-2', 'rounded', 'mb-2', 'self-start', 'max-w-[80%]');
-				paragraph.innerText = message;
-				windowMessages.appendChild(paragraph);
-			})
-			//移除hidden屬性 讓聊天室可以彈出
-			chatWindow.classList.remove('hidden');
-		})
-	})
+            // 🔥 修正 1 & 2：
+            // 移除後面的 || '[]' (那是字串，會導致型別錯誤)
+            // 加上 "as string[]" 告訴 TS 這裡面裝的是字串陣列
+            const skillStutasMessages = JSON.parse(rawSkillStutasMessages) as string[];
+            
+            // 這樣 TS 就知道 message 必定是 string，不會報錯了
+            skillStutasMessages.forEach((message) => {
+                const paragraph = document.createElement('div');
+                paragraph.classList.add('bg-gray-100', 'p-2', 'rounded', 'mb-2', 'self-start', 'max-w-[80%]');
+                paragraph.innerText = message;
+                windowMessages.appendChild(paragraph);
+            });
+
+            chatWindow.classList.remove('hidden');
+        })
+    })
 	
 	//  以下為篩選按鈕邏輯
     const toggleBtn = document.getElementById('filter-toggle-btn');
@@ -172,9 +172,12 @@ const categories = ["All", ...new Set(mySkills.map((mySkill)=> mySkill.category)
             });
 
             if (noResultMsg) {
-                visibleCount === 0 ? noResultMsg.classList.remove('hidden') : noResultMsg.classList.add('hidden');
+                if (visibleCount === 0) {
+                    noResultMsg.classList.remove('hidden');
+                } else {
+                    noResultMsg.classList.add('hidden');
+                }
             }
-
             // 狀態回饋
             if (targetCategory !== 'All') {
                 activeDot?.classList.remove('hidden');
