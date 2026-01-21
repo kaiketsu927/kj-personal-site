@@ -1,7 +1,6 @@
 ---
 import { myProfile } from "~/data/myData";
 
-// 1. 核心導航選單 (新增 Life & Article)
 const mainNavItems = [
     { name: "Home", icon: "home", href: "/", color: "text-blue-500" },
     { name: "Work", icon: "briefcase", href: "/work", color: "text-green-600" },
@@ -11,7 +10,7 @@ const mainNavItems = [
     { name: "Life", icon: "life", href: "/life", color: "text-yellow-500" },      
 ];
 
-// 2. LeetCode 模擬數據 (根據你的截圖)
+//  LeetCode 模擬數據
 const leetcodeStats = {
     username: "kaiketsu",
     rank: "2,182,800",
@@ -23,7 +22,7 @@ const leetcodeStats = {
     profileUrl: "https://leetcode.com/u/kaiketsu/"
 };
 
-// 3. 聯絡捷徑
+
 const contactShortcuts = [
     { name: "GitHub", img: "https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png", href: "https://github.com/kaiketsu927", subtitle: "Check my code" },
     // { name: "LinkedIn", img: "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg", href: "https://www.linkedin.com/in/", subtitle: "Connect with me" },
@@ -34,7 +33,6 @@ const contactShortcuts = [
 // Helper: 產生隨機的綠色等級 (模擬 GitHub/LeetCode 貢獻圖)
 const getRandomContributionColor = () => {
     const colors = ['bg-gray-200', 'bg-green-200', 'bg-green-400', 'bg-green-600'];
-    // 讓灰色多一點，看起來比較真實
     const rand = Math.random();
     if (rand > 0.7) return colors[3];
     if (rand > 0.5) return colors[2];
@@ -102,20 +100,41 @@ const contributionDots = Array(52).fill(0).map(() => getRandomContributionColor(
 
         <hr class="border-gray-300 mx-2" />
 
-        <div class="px-2">
-             <h3 class="text-[17px] font-semibold text-gray-500 mb-2">AD</h3>
-             <a href="mailto:kj@example.com" class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors group cursor-pointer">
-                <div class="w-24 h-24 bg-gradient-to-br from-purple-600 to-blue-500 rounded-lg flex flex-col items-center justify-center text-white shrink-0 shadow-sm group-hover:shadow-md transition-shadow relative overflow-hidden">
-                    <div class="absolute inset-0 bg-white opacity-10 group-hover:opacity-20 transition-opacity"></div>
-                    <span class="text-3xl">🤝</span>
-                    <span class="text-xs font-bold mt-2">HIRE ME</span>
+       <div class="px-2">
+            <h3 class="text-[17px] font-semibold text-gray-500 mb-2">AD</h3>
+            <div class="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100 transition-colors group cursor-pointer">
+                
+                <div class="w-28 h-28 rounded-lg flex flex-col items-center justify-center text-white shrink-0 shadow-sm group-hover:shadow-md transition-shadow relative overflow-hidden">
+                    
+                    <img 
+                        src="./kj-ad.png"
+                        alt="Coding Setup"
+                        class="absolute inset-0 bg-gradient-to-br from-purple-500/60 to-blue-350/50"
+                    />
+
+                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/60 to-blue-350/50 mix-blend-multiply"></div>
+                    
+                    <div class="absolute bottom-[5%] inset-x-0 z-10 flex flex-col items-center">
+                        <!-- <span class="text-3xl drop-shadow-md">🤝</span> -->
+                        <span class="text-[17px] font-bold mt-2 drop-shadow-md tracking-wide text-yellow-500">HIRE ME</span>
+                    </div>
                 </div>
+                
                 <div class="flex flex-col">
-                    <span class="text-[15px] font-semibold text-gray-900 leading-snug group-hover:underline">Open for Opportunities</span>
-                    <span class="text-[13px] text-gray-500 mt-1">Full-Stack / Backend</span>
-                    <span class="text-[13px] text-gray-500 mt-0.5 line-clamp-2">Looking for a passionate engineer? Let's build something amazing together.</span>
+                    <span class="text-[15px] font-semibold text-gray-900 leading-snug group-hover:underline">
+                        Open for Opportunities
+                    </span>
+                    <span class="text-[13px] text-gray-500 mt-1">
+                        Backend / Data Engineer
+                    </span>
+                    <span class="text-[13px] text-gray-500 mt-0.5 line-clamp-2">
+                        Looking for a passionate internship engineer?
+                    </span>
+                    <span class="text-[13px] text-gray-500 mt-0.5 line-clamp-2">
+                         Let's build something amazing together.
+                    </span>
                 </div>
-             </a>
+            </div>
         </div>
 
         <hr class="border-gray-300 mx-2" />
