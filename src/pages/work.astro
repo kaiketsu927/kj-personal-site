@@ -4,11 +4,15 @@ import Post from '~/components/myComponents/Post.astro';
 import { allPosts } from '~/data/myData';
 
 // 篩選類別
-const posts = allPosts.filter(p => p.category === 'work');
+const pinnedPosts = allPosts.filter(p => p.category === 'work'&& p.isPinned===true);
+const normalPosts = allPosts.filter(p => p.category === 'work'&& p.isPinned===false);
 ---
 
-<SocialPageLayout title="Work | Social Resume">
-    {posts.map((post) => (
+<SocialPageLayout title="Work | KJ's Personal Site">
+    {pinnedPosts.map((post) => (
+        <Post post={post} />
+    ))}
+    {normalPosts.map((post) => (
         <Post post={post} />
     ))}
 </SocialPageLayout>
