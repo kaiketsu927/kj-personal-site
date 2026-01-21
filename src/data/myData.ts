@@ -23,7 +23,7 @@ export interface Post{
 export interface PreviewLink{
   id : number,
   // title?: string, //未來擴充可能用到
-  imagePath: string, // 預覽圖路徑
+  imagePath?: string, // 預覽圖路徑
   url : string //點擊會跳轉的連結
   
 }
@@ -241,8 +241,12 @@ export const allPosts: Post[] = [
     name: "凱傑 楊",
     category: "work",
     description: "你們現在看到的個人網站，就是我的第二個 Side Project！🚀\n雖然我目前主攻後端，但為了讓作品有個家，選擇使用 Astro 搭配 Tailwind CSS 快速建置。這裡就像我的實驗室與個人小天地，未來會持續將我的作品或一些技術的/生活的事蹟更新進來~!",
-    likes: 10,
-    // imageOrLink: "./personal-site.png",
+    likes: 77,
+   imageOrLink: {
+      id: 103,
+      // imagePath: "./personal-site.png",
+      url: "https://github.com/kaiketsu927/kj-personal-site"
+    },
     isPinned: false,
     date : "2026-01-21",
   },
